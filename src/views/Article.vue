@@ -62,7 +62,7 @@
   import RwvComment from '@/components/Comment'
   import RwvCommentEditor from '@/components/CommentEditor'
   import RwvTag from '@/components/VTag'
-  import { FETCH_ARTICLE, FETCH_COMMENTS } from '@/store/actions.type'
+  import { FETCH_ARTICLE, FETCH_COMMENTS } from '@/actions/actions.type'
 
   export default {
     name: 'rwv-article',
@@ -79,6 +79,7 @@
       RwvTag
     },
     beforeRouteEnter (to, from, next) {
+      console.log('enter', this)
       Promise.all([
         store.dispatch(FETCH_ARTICLE, to.params.slug),
         store.dispatch(FETCH_COMMENTS, to.params.slug)

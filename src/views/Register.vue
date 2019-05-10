@@ -33,7 +33,7 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import { REGISTER } from '@/store/actions.type'
+import { REGISTER } from '@/actions/actions.type'
 
 export default {
   name: 'RwvRegister',

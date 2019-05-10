@@ -1,27 +1,11 @@
-import ApiService from '@/common/api.service'
-import JwtService from '@/common/jwt.service'
 import { LOGIN, LOGOUT, REGISTER, CHECK_AUTH, UPDATE_USER } from './actions.type'
 import { SET_AUTH, PURGE_AUTH, SET_ERROR } from './mutations.type'
 
-const state = {
-  errors: null,
-  user: {},
-  isAuthenticated: !!JwtService.getToken()
-}
-
-const getters = {
-  currentUser (state) {
-    return state.user
-  },
-  isAuthenticated (state) {
-    return state.isAuthenticated
-  }
-}
-
 const actions = {
   [LOGIN] (context, credentials) {
+    const { backend } = this.services
     return new Promise((resolve) => {
-      ApiService
+      backend
         .post('users/login', {user: credentials})
         .then(({data}) => {
           context.commit(SET_AUTH, data.user)
@@ -36,8 +20,9 @@ const actions = {
     context.commit(PURGE_AUTH)
   },
   [REGISTER] (context, credentials) {
+    const { backend } = this.services
     return new Promise((resolve, reject) => {
-      ApiService
+      backend
         .post('users', {user: credentials})
         .then(({data}) => {
           context.commit(SET_AUTH, data.user)
@@ -49,9 +34,11 @@ const actions = {
     })
   },
   [CHECK_AUTH] (context) {
-    if (JwtService.getToken()) {
-      ApiService.setHeader()
-      ApiService
+    console.log(this)
+
+    const { backend, jwt } = this.services
+    if (jwt.getToken()) {
+      backend
         .get('user')
         .then(({data}) => {
           context.commit(SET_AUTH, data.user)
@@ -75,7 +62,9 @@ const actions = {
       user.password = password
     }
 
-    return ApiService
+    const { backend } = this.services
+
+    return backend
       .put('user', user)
       .then(({data}) => {
         context.commit(SET_AUTH, data.user)
@@ -84,27 +73,4 @@ const actions = {
   }
 }
 
-const mutations = {
-  [SET_ERROR] (state, error) {
-    state.errors = error
-  },
-  [SET_AUTH] (state, user) {
-    state.isAuthenticated = true
-    state.user = user
-    state.errors = {}
-    JwtService.saveToken(state.user.token)
-  },
-  [PURGE_AUTH] (state) {
-    state.isAuthenticated = false
-    state.user = {}
-    state.errors = {}
-    JwtService.destroyToken()
-  }
-}
-
-export default {
-  state,
-  actions,
-  mutations,
-  getters
-}
+export default actions

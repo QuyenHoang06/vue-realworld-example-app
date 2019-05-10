@@ -48,7 +48,7 @@
 </template>
 <script>
   import { mapGetters } from 'vuex'
-  import { LOGOUT, UPDATE_USER } from '@/store/actions.type'
+  import { LOGOUT, UPDATE_USER } from '@/actions/actions.type'
 
   export default {
     name: 'RwvSettings',

@@ -63,8 +63,8 @@
 </template>
 <script>
   import { mapGetters } from 'vuex'
-  import store from '@/store'
   import RwvListErrors from '@/components/ListErrors'
+  import store from '@/store'
   import {
     ARTICLE_PUBLISH,
     ARTICLE_EDIT,
@@ -72,7 +72,7 @@
     ARTICLE_EDIT_ADD_TAG,
     ARTICLE_EDIT_REMOVE_TAG,
     ARTICLE_RESET_STATE
-  } from '@/store/actions.type'
+  } from '@/actions/actions.type'
 
   export default {
     name: 'RwvArticleEdit',

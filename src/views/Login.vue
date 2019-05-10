@@ -42,7 +42,7 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import { LOGIN } from '@/store/actions.type'
+import { LOGIN } from '@/actions/actions.type'
 
 export default {
   name: 'RwvLogin',

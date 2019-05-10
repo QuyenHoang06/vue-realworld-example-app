@@ -67,7 +67,7 @@
 </template>
 <script>
   import {mapGetters} from 'vuex'
-  import {FETCH_PROFILE, FETCH_PROFILE_FOLLOW, FETCH_PROFILE_UNFOLLOW} from '@/store/actions.type'
+  import {FETCH_PROFILE, FETCH_PROFILE_FOLLOW, FETCH_PROFILE_UNFOLLOW} from '@/actions/actions.type'
 
   export default {
     name: 'RwvProfile',

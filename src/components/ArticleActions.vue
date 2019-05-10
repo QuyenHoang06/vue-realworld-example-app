@@ -45,7 +45,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { FAVORITE_ADD, FAVORITE_REMOVE, ARTICLE_DELETE, FETCH_PROFILE_FOLLOW, FETCH_PROFILE_UNFOLLOW } from '@/store/actions.type'
+import { FAVORITE_ADD, FAVORITE_REMOVE, ARTICLE_DELETE, FETCH_PROFILE_FOLLOW, FETCH_PROFILE_UNFOLLOW } from '@/actions/actions.type'
 
 export default {
   name: 'RwvArticleActions',

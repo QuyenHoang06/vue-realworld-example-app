@@ -25,7 +25,7 @@
   import RwvTag from '@/components/VTag'
   import RwvArticlePreview from '@/components/VArticlePreview'
   import VPagination from '@/components/VPagination'
-  import { FETCH_ARTICLES } from '@/store/actions.type'
+  import { FETCH_ARTICLES } from '@/actions/actions.type'
 
   export default {
     name: 'rwv-article-list',

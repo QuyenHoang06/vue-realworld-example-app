@@ -1,5 +1,3 @@
-import Vue from 'vue'
-import { ArticlesService, CommentsService, FavoriteService } from '@/common/api.service'
 import {
   FETCH_ARTICLE,
   FETCH_COMMENTS,
@@ -23,52 +21,45 @@ import {
   UPDATE_ARTICLE_IN_LIST
 } from './mutations.type'
 
-const initialState = {
-  article: {
-    author: {},
-    title: '',
-    description: '',
-    body: '',
-    tagList: []
-  },
-  comments: []
-}
-
-export const state = Object.assign({}, initialState)
-
 export const actions = {
   [FETCH_ARTICLE] (context, articleSlug, prevArticle) {
+    console.log(this.app(), 'this.app')
     // avoid extronuous network call if article exists
     if (prevArticle !== undefined) {
       return context.commit(SET_ARTICLE, prevArticle)
     }
-    return ArticlesService.get(articleSlug)
+    const { backend } = this.services
+    return backend.getArticle(articleSlug)
       .then(({ data }) => {
         context.commit(SET_ARTICLE, data.article)
         return data
       })
   },
   [FETCH_COMMENTS] (context, articleSlug) {
-    return CommentsService.get(articleSlug)
+    const { backend } = this.services
+    return backend.getComment(articleSlug)
       .then(({ data }) => {
         context.commit(SET_COMMENTS, data.comments)
       })
   },
   [COMMENT_CREATE] (context, payload) {
-    return CommentsService
-      .post(payload.slug, payload.comment)
+    const { backend } = this.services
+    return backend
+      .postComment(payload.slug, payload.comment)
       .then(() => { context.dispatch(FETCH_COMMENTS, payload.slug) })
   },
   [COMMENT_DESTROY] (context, payload) {
-    return CommentsService
-      .destroy(payload.slug, payload.commentId)
+    const { backend } = this.services
+    return backend
+      .destroyComment(payload.slug, payload.commentId)
       .then(() => {
         context.dispatch(FETCH_COMMENTS, payload.slug)
       })
   },
   [FAVORITE_ADD] (context, payload) {
-    return FavoriteService
-      .add(payload)
+    const {backend} = this.services
+    return backend
+      .addFavorite(payload)
       .then(({ data }) => {
         // Update list as well. This allows us to favorite an article in the Home view.
         context.commit(
@@ -80,8 +71,9 @@ export const actions = {
       })
   },
   [FAVORITE_REMOVE] (context, payload) {
-    return FavoriteService
-      .remove(payload)
+    const {backend} = this.services
+    return backend
+      .removeFavorite(payload)
       .then(({ data }) => {
         // Update list as well. This allows us to favorite an article in the Home view.
         context.commit(
@@ -93,13 +85,16 @@ export const actions = {
       })
   },
   [ARTICLE_PUBLISH] ({ state }) {
-    return ArticlesService.create(state.article)
+    const { backend } = this.services
+    return backend.createArticle(state.article)
   },
   [ARTICLE_DELETE] (context, slug) {
-    return ArticlesService.destroy(slug)
+    const { backend } = this.services
+    return backend.destroyArticle(slug)
   },
   [ARTICLE_EDIT] ({ state }) {
-    return ArticlesService.update(state.article.slug, state.article)
+    const { backend } = this.services
+    return backend.updateArticle(state.article.slug, state.article)
   },
   [ARTICLE_EDIT_ADD_TAG] (context, tag) {
     context.commit(TAG_ADD, tag)
@@ -112,39 +107,4 @@ export const actions = {
   }
 }
 
-/* eslint no-param-reassign: ["error", { "props": false }] */
-export const mutations = {
-  [SET_ARTICLE] (state, article) {
-    state.article = article
-  },
-  [SET_COMMENTS] (state, comments) {
-    state.comments = comments
-  },
-  [TAG_ADD] (state, tag) {
-    state.article.tagList = state.article.tagList.concat([tag])
-  },
-  [TAG_REMOVE] (state, tag) {
-    state.article.tagList = state.article.tagList.filter(t => t !== tag)
-  },
-  [RESET_STATE] () {
-    for (let f in state) {
-      Vue.set(state, f, initialState[f])
-    }
-  }
-}
-
-const getters = {
-  article (state) {
-    return state.article
-  },
-  comments (state) {
-    return state.comments
-  }
-}
-
-export default {
-  state,
-  actions,
-  mutations,
-  getters
-}
+export default actions

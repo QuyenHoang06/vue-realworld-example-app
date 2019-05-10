@@ -61,7 +61,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import RwvTag from '@/components/VTag'
-  import { FETCH_TAGS } from '@/store/actions.type'
+  import { FETCH_TAGS } from '@/actions/actions.type'
 
   export default {
     name: 'home',

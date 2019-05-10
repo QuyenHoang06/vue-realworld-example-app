@@ -39,7 +39,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import RwvArticleActions from '@/components/ArticleActions'
-  import { FAVORITE_ADD, FAVORITE_REMOVE } from '@/store/actions.type'
+  import { FAVORITE_ADD, FAVORITE_REMOVE } from '@/actions/actions.type'
 
   export default {
     name: 'RwvArticleMeta',

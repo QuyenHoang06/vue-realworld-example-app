@@ -20,10 +20,14 @@ module.exports = {
       'webpack': {
         'config': 'build/webpack.base.conf.js'
       }
-    }
+    },
   },
   // add your custom rules here
   'rules': {
+    'import/first': 0,
+    'brace-style': 1,
+    'semi': 1,
+
     // // don't require .vue extension when importing
     // 'import/extensions': ['error', 'always', {
     //   'js': 'never',

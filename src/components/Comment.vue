@@ -21,7 +21,7 @@
 </template>
 <script>
   import { mapGetters } from 'vuex'
-  import { COMMENT_DESTROY } from '@/store/actions.type'
+  import { COMMENT_DESTROY } from '@/actions/actions.type'
 
   export default {
     name: 'RwvComment',
